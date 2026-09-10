@@ -1,10 +1,14 @@
 # Feature actual
 
+<!-- Nombre de feature -->
+
 ## Objetivos
 
+<!-- Objetivos, requerimientos, criterios de aceptación -->
 
 ## Notas
 
+<!-- Cualquier nota extra -->
 
 ## Histórico
 
@@ -26,6 +30,8 @@ LIMPIEZA O REINICIO:
 Cuando el usuario solicite limpiar o reiniciar la feature, eliminar todo el contenido operativo
 de este documento, incluidos objetivos, restricciones, criterios de aceptación, notas y valores
 de la fase actual.
+
+No eliminar ni modificar ningún comentario HTML del documento.
 
 Conservar únicamente:
 - El encabezado de primer nivel "# Feature actual".
