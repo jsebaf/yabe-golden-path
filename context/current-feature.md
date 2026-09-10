@@ -1,35 +1,39 @@
 # Feature actual
 
+<!-- Nombre de feature -->
+
 ## Objetivos
 
-- Crear una aplicación Laravel funcional a partir del repositorio actual.
-- Utilizar Laravel 13.x y mantener la estructura, convenciones y configuración estándar por defecto siempre que sea posible.
-- Dejar el proyecto preparado para el desarrollo posterior del API.
-- Configurar SQLite como base de datos local, crear la base de datos necesaria y ejecutar las migraciones iniciales.
-- Configurar el entorno de desarrollo y verificar que la aplicación se inicia y se conecta correctamente a la base de datos.
-- Registrar en el repositorio todos los cambios necesarios para la inicialización.
-
-### Restricciones
-
-- No implementar funcionalidad específica ni lógica de negocio.
-- No añadir dependencias ni paquetes adicionales que no sean necesarios para una instalación estándar de Laravel.
-- No instalar ni utilizar Laravel Boost.
-
-### Criterios de aceptación
-
-- Existe un proyecto Laravel funcional que utiliza Laravel 13.x.
-- Las dependencias estándar están instaladas correctamente.
-- La aplicación se inicia sin errores y se conecta a la base de datos local SQLite.
-- Las migraciones iniciales de Laravel se han ejecutado correctamente.
-- La estructura del proyecto corresponde a una instalación estándar de Laravel 13.x.
-- No se ha añadido funcionalidad de negocio, Laravel Boost ni dependencias innecesarias.
-- Todos los cambios necesarios están registrados en el repositorio.
+<!-- Objetivos, requerimientos, criterios de aceptación -->
 
 ## Notas
 
-- Issue de referencia: https://github.com/jsebaf/yabe-golden-path/issues/1
-- Fase actual: Inicio.
+<!-- Cualquier nota extra -->
 
 ## Histórico
 
+- 2026-09-10: Se implementó y verificó el esqueleto inicial del API definido en el issue #4.
+- 2026-09-10: Se preparó el contexto inicial a partir del issue #4, "Implementar el esqueleto del API".
 - 2026-09-10: Se preparó el contexto inicial a partir del issue #1, "Inicializar el proyecto Laravel".
+
+<!--
+HISTÓRICO:
+- Es persistente y nunca debe eliminarse ni modificarse al limpiar o reiniciar la feature.
+- Solo se actualizará cuando el usuario lo solicite explícitamente.
+- Las nuevas entradas se añadirán al principio, ordenadas de la más reciente a la más antigua.
+-->
+
+<!--
+LIMPIEZA O REINICIO:
+Cuando el usuario solicite limpiar o reiniciar la feature, eliminar todo el contenido operativo
+de este documento, incluidos objetivos, restricciones, criterios de aceptación, notas y valores
+de la fase actual.
+
+Conservar únicamente:
+- El encabezado de primer nivel "# Feature actual".
+- Todos los encabezados de segundo nivel que empiecen por "##".
+- Todos los comentarios HTML.
+- La sección "## Histórico" completa, incluyendo todas sus entradas.
+
+No actualizar, reordenar ni eliminar el histórico durante esta operación.
+-->
