@@ -115,9 +115,23 @@ components:
           example: GRAND
         roomTypes:
           type: array
-          description: Room types available at the hotel
+          description: Room types available at the hotel and their inventory
           items:
-            $ref: '#/components/schemas/RoomType'
+            $ref: '#/components/schemas/HotelRoomType'
+
+    HotelRoomType:
+      type: object
+      required:
+        - roomType
+        - quantity
+      properties:
+        roomType:
+          $ref: '#/components/schemas/RoomType'
+        quantity:
+          type: integer
+          minimum: 1
+          description: Number of rooms of this type available at the hotel
+          example: 20
 
     RoomType:
       type: object
