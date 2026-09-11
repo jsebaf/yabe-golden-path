@@ -157,6 +157,7 @@ components:
     AvailabilityRequest:
       type: object
       required:
+        - paxes
         - checkin
         - checkout
       properties:
@@ -168,6 +169,11 @@ components:
           type: string
           description: Room type code
           example: DELUXE
+        paxes:
+          type: integer
+          minimum: 1
+          description: Number of guests
+          example: 2
         checkin:
           type: string
           format: date
