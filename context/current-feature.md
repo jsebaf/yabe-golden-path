@@ -1,8 +1,27 @@
-# Feature actual
+# Implementar endpoints de consulta
 
 ## Objetivos
 
+Implementar los endpoints de consulta del API:
+
+- `GET /api/v1/hotels`, accesible sin autenticación, devolviendo un array conforme al esquema `Hotel` de OpenAPI.
+- `GET /api/v1/room-types`, accesible sin autenticación, devolviendo un array conforme al esquema `RoomType` de OpenAPI.
+
+Requisitos técnicos y de respuesta:
+
+- Utilizar el servicio de datos mock existente como única fuente de datos.
+- No acceder directamente a los datos mock desde los controllers.
+- Incluir en cada hotel sus `HotelRoomType`, el `RoomType` asociado y la cantidad de unidades (`quantity`).
+- Añadir Feature Tests para ambos endpoints que verifiquen al menos el código de respuesta y la estructura de las respuestas.
+- Mantener la suite completa de tests pasando.
+
 ## Notas
+
+Quedan fuera de alcance la persistencia, las migraciones y los seeders, la autenticación y autorización, la paginación, el filtrado y la ordenación, así como:
+
+- `POST /api/v1/availability` y el cálculo de disponibilidad.
+- `POST /api/v1/bookings`.
+- Cualquier modificación de la especificación OpenAPI.
 
 ## Histórico
 

@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class ApiRoutesTest extends TestCase
 {
-    public function test_api_skeleton_routes_are_registered_and_public(): void
+    public function test_api_routes_are_registered_and_public(): void
     {
         $routes = [
             ['name' => 'hotels.index', 'method' => 'GET', 'uri' => '/api/v1/hotels'],
@@ -25,13 +25,11 @@ class ApiRoutesTest extends TestCase
             $this->assertSame(ltrim($definition['uri'], '/'), $route->uri());
             $this->assertContains($definition['method'], $route->methods());
 
-            $response = $definition['method'] === 'GET'
-                ? $this->getJson($definition['uri'])
-                : $this->postJson($definition['uri'], []);
-
-            $response
-                ->assertStatus(501)
-                ->assertJson(['message' => 'Not implemented']);
+            if ($definition['method'] === 'POST') {
+                $this->postJson($definition['uri'], [])
+                    ->assertStatus(501)
+                    ->assertJson(['message' => 'Not implemented']);
+            }
         }
     }
 }

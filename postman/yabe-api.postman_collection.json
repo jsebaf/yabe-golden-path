@@ -1,0 +1,120 @@
+{
+  "info": {
+    "_postman_id": "2e5dd1b1-5d7b-4a7a-8c0e-4f0ddcce6a11",
+    "name": "YABE API",
+    "description": "Requests for the YABE API query endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000/api/v1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Hotels",
+      "item": [
+        {
+          "name": "List hotels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hotels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hotels"
+              ]
+            },
+            "description": "Returns hotels with their room types and inventory quantities."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const hotels = pm.response.json();",
+                  "pm.test('Response is an array of hotels', function () {",
+                  "    pm.expect(hotels).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "pm.test('Hotels include room types and inventory', function () {",
+                  "    hotels.forEach(function (hotel) {",
+                  "        pm.expect(hotel).to.have.property('name').that.is.a('string');",
+                  "        pm.expect(hotel).to.have.property('code').that.is.a('string');",
+                  "        pm.expect(hotel).to.have.property('roomTypes').that.is.an('array');",
+                  "        hotel.roomTypes.forEach(function (inventory) {",
+                  "            pm.expect(inventory).to.have.property('roomType');",
+                  "            pm.expect(inventory.roomType).to.have.property('name').that.is.a('string');",
+                  "            pm.expect(inventory.roomType).to.have.property('code').that.is.a('string');",
+                  "            pm.expect(inventory.roomType).to.have.property('maxOccupancy').that.is.a('number');",
+                  "            pm.expect(inventory).to.have.property('quantity').that.is.a('number');",
+                  "        });",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Room Types",
+      "item": [
+        {
+          "name": "List room types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/room-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "room-types"
+              ]
+            },
+            "description": "Returns all available room types."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const roomTypes = pm.response.json();",
+                  "pm.test('Response is an array of room types', function () {",
+                  "    pm.expect(roomTypes).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "pm.test('Room types match the response schema', function () {",
+                  "    roomTypes.forEach(function (roomType) {",
+                  "        pm.expect(roomType).to.have.property('name').that.is.a('string');",
+                  "        pm.expect(roomType).to.have.property('code').that.is.a('string');",
+                  "        pm.expect(roomType).to.have.property('maxOccupancy').that.is.a('number');",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
