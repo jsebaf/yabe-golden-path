@@ -22,6 +22,7 @@ class HotelController extends Controller
                             'maxOccupancy' => $hotelRoomType->roomType->maxOccupancy,
                         ],
                         'quantity' => $hotelRoomType->quantity,
+                        'price' => $hotelRoomType->price,
                     ];
                 })->values()->all(),
             ];

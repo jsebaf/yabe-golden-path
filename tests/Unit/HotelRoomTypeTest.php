@@ -44,6 +44,13 @@ class HotelRoomTypeTest extends TestCase
         $this->assertSame(20, $hotelRoomType->quantity);
     }
 
+    public function test_price_is_cast_to_a_float(): void
+    {
+        $hotelRoomType = new HotelRoomType(['price' => '125.50']);
+
+        $this->assertSame(125.5, $hotelRoomType->price);
+    }
+
     public function test_hotel_room_type_serializes_a_room_type_and_quantity(): void
     {
         $roomType = new RoomType([
@@ -51,7 +58,7 @@ class HotelRoomTypeTest extends TestCase
             'code' => 'DELUXE',
             'maxOccupancy' => 2,
         ]);
-        $hotelRoomType = new HotelRoomType(['quantity' => 20]);
+        $hotelRoomType = new HotelRoomType(['quantity' => 20, 'price' => 125.50]);
         $hotelRoomType->setRelation('roomType', $roomType);
 
         $hotel = new Hotel([
@@ -63,6 +70,7 @@ class HotelRoomTypeTest extends TestCase
         $this->assertSame([
             [
                 'quantity' => 20,
+                'price' => 125.5,
                 'roomType' => [
                     'name' => 'Deluxe Room',
                     'code' => 'DELUXE',

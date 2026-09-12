@@ -58,6 +58,7 @@
                   "            pm.expect(inventory.roomType).to.have.property('code').that.is.a('string');",
                   "            pm.expect(inventory.roomType).to.have.property('maxOccupancy').that.is.a('number');",
                   "            pm.expect(inventory).to.have.property('quantity').that.is.a('number');",
+                  "            pm.expect(inventory).to.have.property('price').that.is.a('number');",
                   "        });",
                   "    });",
                   "});"

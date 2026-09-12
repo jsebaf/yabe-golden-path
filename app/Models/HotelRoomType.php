@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['hotel_id', 'room_type_id', 'quantity'])]
+#[Fillable(['hotel_id', 'room_type_id', 'quantity', 'price'])]
 class HotelRoomType extends Model
 {
     public static $snakeAttributes = false;
@@ -36,6 +36,7 @@ class HotelRoomType extends Model
     {
         return [
             'quantity' => 'integer',
+            'price' => 'float',
         ];
     }
 }
