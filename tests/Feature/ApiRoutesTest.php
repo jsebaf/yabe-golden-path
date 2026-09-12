@@ -25,7 +25,7 @@ class ApiRoutesTest extends TestCase
             $this->assertSame(ltrim($definition['uri'], '/'), $route->uri());
             $this->assertContains($definition['method'], $route->methods());
 
-            if ($definition['method'] === 'POST') {
+            if ($definition['name'] === 'bookings.store') {
                 $this->postJson($definition['uri'], [])
                     ->assertStatus(501)
                     ->assertJson(['message' => 'Not implemented']);

@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "2e5dd1b1-5d7b-4a7a-8c0e-4f0ddcce6a11",
     "name": "YABE API",
-    "description": "Requests for the YABE API query endpoints.",
+    "description": "Requests for the YABE API query and availability endpoints.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -109,6 +109,156 @@
                   "        pm.expect(roomType).to.have.property('code').that.is.a('string');",
                   "        pm.expect(roomType).to.have.property('maxOccupancy').that.is.a('number');",
                   "    });",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Availability",
+      "item": [
+        {
+          "name": "Check availability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paxes\": 2,\n  \"checkin\": \"2026-10-20\",\n  \"checkout\": \"2026-10-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/availability",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "availability"
+              ]
+            },
+            "description": "Returns all hotel and room type combinations available for the requested occupancy and interval."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const availability = pm.response.json();",
+                  "pm.test('Response is a non-empty array', function () {",
+                  "    pm.expect(availability).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "pm.test('Availability items match the response schema', function () {",
+                  "    availability.forEach(function (item) {",
+                  "        pm.expect(item).to.have.property('hotel');",
+                  "        pm.expect(item.hotel).to.have.property('code').that.is.a('string');",
+                  "        pm.expect(item).to.have.property('roomType');",
+                  "        pm.expect(item.roomType).to.have.property('code').that.is.a('string');",
+                  "        pm.expect(item).to.have.property('price').that.is.a('number');",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check availability by hotel and room type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hotel\": \"GRAND\",\n  \"roomType\": \"SUITE\",\n  \"paxes\": 4,\n  \"checkin\": \"2026-10-20\",\n  \"checkout\": \"2026-10-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/availability",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "availability"
+              ]
+            },
+            "description": "Returns availability filtered by the GRAND hotel and SUITE room type."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const availability = pm.response.json();",
+                  "pm.test('Only the requested hotel and room type are returned', function () {",
+                  "    pm.expect(availability).to.have.length(1);",
+                  "    pm.expect(availability[0].hotel.code).to.equal('GRAND');",
+                  "    pm.expect(availability[0].roomType.code).to.equal('SUITE');",
+                  "    pm.expect(availability[0].price).to.equal(220);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check availability with existing bookings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paxes\": 2,\n  \"checkin\": \"2026-10-02\",\n  \"checkout\": \"2026-10-04\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/availability",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "availability"
+              ]
+            },
+            "description": "Checks availability for an interval overlapping confirmed and cancelled bookings in the mock data."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const availability = pm.response.json();",
+                  "pm.test('Availability remains available when inventory is not exhausted', function () {",
+                  "    pm.expect(availability).to.be.an('array').that.is.not.empty;",
                   "});"
                 ]
               }

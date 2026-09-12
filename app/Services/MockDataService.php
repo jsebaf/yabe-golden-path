@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use App\Contracts\AvailabilityDataSource;
 use App\Models\Booking;
 use App\Models\Hotel;
 use App\Models\HotelRoomType;
 use App\Models\RoomType;
 use Illuminate\Support\Collection;
 
-class MockDataService
+class MockDataService implements AvailabilityDataSource
 {
     /**
      * @var Collection<int, Hotel>
