@@ -124,6 +124,7 @@ components:
       required:
         - roomType
         - quantity
+        - price
       properties:
         roomType:
           $ref: '#/components/schemas/RoomType'
@@ -132,6 +133,12 @@ components:
           minimum: 1
           description: Number of rooms of this type available at the hotel
           example: 20
+        price:
+          type: number
+          format: double
+          minimum: 0
+          description: Price of the room
+          example: 125.50
 
     RoomType:
       type: object

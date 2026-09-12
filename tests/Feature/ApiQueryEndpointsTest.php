@@ -19,6 +19,7 @@ class ApiQueryEndpointsTest extends TestCase
                         '*' => [
                             'roomType' => ['name', 'code', 'maxOccupancy'],
                             'quantity',
+                            'price',
                         ],
                     ],
                 ],
@@ -35,6 +36,7 @@ class ApiQueryEndpointsTest extends TestCase
                                 'maxOccupancy' => 2,
                             ],
                             'quantity' => 20,
+                            'price' => 125.5,
                         ],
                     ],
                 ],

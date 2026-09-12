@@ -63,6 +63,7 @@ class MockDataService
             'hotel_id' => 1,
             'room_type_id' => 1,
             'quantity' => 20,
+            'price' => 125.50,
         ]);
         $grandDeluxe->setRelation('hotel', $grandHotel);
         $grandDeluxe->setRelation('roomType', $deluxeRoom);
@@ -71,6 +72,7 @@ class MockDataService
             'hotel_id' => 1,
             'room_type_id' => 2,
             'quantity' => 5,
+            'price' => 220.00,
         ]);
         $grandSuite->setRelation('hotel', $grandHotel);
         $grandSuite->setRelation('roomType', $suiteRoom);
@@ -79,6 +81,7 @@ class MockDataService
             'hotel_id' => 2,
             'room_type_id' => 3,
             'quantity' => 12,
+            'price' => 95.00,
         ]);
         $coastStandard->setRelation('hotel', $coastHotel);
         $coastStandard->setRelation('roomType', $standardRoom);

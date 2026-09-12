@@ -47,6 +47,7 @@ class MockDataServiceTest extends TestCase
 
         foreach ($service->hotelRoomTypes() as $inventory) {
             $this->assertGreaterThan(0, $inventory->quantity);
+            $this->assertGreaterThanOrEqual(0, $inventory->price);
             $this->assertSame($inventory->hotel_id, $inventory->hotel->id);
             $this->assertSame($inventory->room_type_id, $inventory->roomType->id);
             $this->assertSame($inventory, $hotels[$inventory->hotel->code]->roomTypes
