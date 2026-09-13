@@ -1,13 +1,14 @@
 # Instrucciones para el agente
 
-## Contexto
+## Flujo de features
 
-Leer los siguientes ficheros para obtener contexto completo del proyecto:
+Cuando la tarea implique iniciar, implementar, verificar o finalizar una feature,
+un issue o el descriptor `context/current-feature.md`, cargar el skill
+`feature-workflow` antes de actuar.
 
-- @context/current-feature.md
-- @context/current-feature-file-spec.md
-- @context/feature-workflow.md
-- @context/coding-conventions.md
+El skill determina qué archivos de contexto deben leerse y cuándo. No es
+necesario leer esos archivos en sesiones que no estén relacionadas con el flujo
+de features.
 
 ## GitHub
 
