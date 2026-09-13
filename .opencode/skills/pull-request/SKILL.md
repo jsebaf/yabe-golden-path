@@ -55,6 +55,8 @@ No hagas commit de cambios ajenos ni modifiques la configuración de Git.
 
 ## Pull Request
 
+Antes de crear la PR, comprueba si ya existe una PR abierta para la rama actual. Si existe, no crees otra y utiliza la PR existente para los commits posteriores.
+
 Crea la PR contra la rama base por defecto del repositorio, salvo que el usuario indique otra.
 
 El cuerpo debe incluir:

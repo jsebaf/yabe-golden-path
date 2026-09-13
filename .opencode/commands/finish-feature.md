@@ -60,4 +60,4 @@ Después de recibir la confirmación:
 5. Añade la etiqueta `done` al issue.
 6. Informa del commit, la rama publicada y el estado final de las etiquetas.
 
-Este comando solo ejecuta la fase de Finalización. No crea ni fusiona un pull request. Después de informar del resultado, detente para que el usuario pueda ejecutar `/create-pr <issue-number>`.
+Este comando solo ejecuta la fase de Finalización. No crea ni fusiona un pull request. Si ya existe una PR para la rama, el `push` final actualizará esa misma PR. Después de informar del resultado, detente y deja la PR lista para merge.

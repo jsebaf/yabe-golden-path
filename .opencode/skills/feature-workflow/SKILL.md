@@ -34,9 +34,10 @@ No avances a una fase posterior sin una solicitud explícita del usuario. Despu�
 
 Para una feature implementada y verificada:
 
-- Usa `/finish-feature <issue-number>` para completar la fase de Finalización en la rama de la feature.
-- Ese comando actualiza y limpia el descriptor, crea el commit, hace `push` de la rama y actualiza las etiquetas del issue.
-- Usa `/create-pr <issue-number>` después para crear la PR desde la rama ya publicada.
+- Usa `/create-pr <issue-number>` para publicar los cambios y crear la PR tempranamente.
+- Permite que la misma rama reciba nuevos commits durante la revisión.
+- Usa `/finish-feature <issue-number>` para completar la fase de Finalización en esa misma rama.
+- Ese comando actualiza y limpia el descriptor, crea el commit final, hace `push` de la rama y actualiza las etiquetas del issue.
 - Nunca hagas `push` directamente a la rama base.
 
 ## Descriptor De La Feature Actual

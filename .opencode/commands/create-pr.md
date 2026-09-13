@@ -19,9 +19,12 @@ Antes de hacer cualquier otra cosa, carga y sigue el skill `pull-request`. Si el
 3. Revisa `git status`, `git diff` y los commits de la rama que todavía no estén en la rama base. Determina todos los archivos modificados por esta tarea, incluidos los archivos nuevos.
 4. Excluye cambios ajenos, temporales, generados y secretos. No reviertas cambios ajenos.
 5. Ejecuta las pruebas y comprobaciones requeridas por la tarea.
-6. Revisa el diff final y muestra las rutas que se incluirán.
+6. Comprueba si ya existe una PR abierta para la rama actual.
+7. Revisa el diff final y muestra las rutas que se incluirán.
 
 Si detectas cambios mezclados, una rama incorrecta, verificaciones fallidas o cualquier otra condición insegura, detente e informa del problema.
+
+Si ya existe una PR para la rama actual, no crees otra. Informa de su URL y detente, salvo que el usuario solicite explícitamente preparar o publicar cambios adicionales.
 
 ## Confirmación
 
