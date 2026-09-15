@@ -2,10 +2,20 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\HotelSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ApiQueryEndpointsTest extends TestCase
 {
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(HotelSeeder::class);
+    }
+
     public function test_hotels_endpoint_returns_hotels_with_room_types_and_inventory(): void
     {
         $response = $this->getJson('/api/v1/hotels');
@@ -13,13 +23,11 @@ class ApiQueryEndpointsTest extends TestCase
         $response->assertOk()
             ->assertJsonStructure([
                 '*' => [
-                    'name',
-                    'code',
+                    'name', 'code',
                     'roomTypes' => [
                         '*' => [
                             'roomType' => ['name', 'code', 'maxOccupancy'],
-                            'quantity',
-                            'price',
+                            'quantity', 'price',
                         ],
                     ],
                 ],
@@ -28,17 +36,11 @@ class ApiQueryEndpointsTest extends TestCase
                 [
                     'name' => 'Grand Hotel',
                     'code' => 'GRAND',
-                    'roomTypes' => [
-                        [
-                            'roomType' => [
-                                'name' => 'Deluxe Room',
-                                'code' => 'DELUXE',
-                                'maxOccupancy' => 2,
-                            ],
-                            'quantity' => 20,
-                            'price' => 125.5,
-                        ],
-                    ],
+                    'roomTypes' => [[
+                        'roomType' => ['name' => 'Deluxe Room', 'code' => 'DELUXE', 'maxOccupancy' => 2],
+                        'quantity' => 20,
+                        'price' => 125.5,
+                    ]],
                 ],
             ]);
     }
@@ -48,25 +50,11 @@ class ApiQueryEndpointsTest extends TestCase
         $response = $this->getJson('/api/v1/room-types');
 
         $response->assertOk()
-            ->assertJsonStructure([
-                '*' => ['name', 'code', 'maxOccupancy'],
-            ])
+            ->assertJsonStructure(['*' => ['name', 'code', 'maxOccupancy']])
             ->assertJson([
-                [
-                    'name' => 'Deluxe Room',
-                    'code' => 'DELUXE',
-                    'maxOccupancy' => 2,
-                ],
-                [
-                    'name' => 'Suite',
-                    'code' => 'SUITE',
-                    'maxOccupancy' => 4,
-                ],
-                [
-                    'name' => 'Standard Room',
-                    'code' => 'STANDARD',
-                    'maxOccupancy' => 2,
-                ],
+                ['name' => 'Deluxe Room', 'code' => 'DELUXE', 'maxOccupancy' => 2],
+                ['name' => 'Suite', 'code' => 'SUITE', 'maxOccupancy' => 4],
+                ['name' => 'Standard Room', 'code' => 'STANDARD', 'maxOccupancy' => 2],
             ]);
     }
 }

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Services\MockDataService;
+use App\Models\Hotel;
 use Illuminate\Http\JsonResponse;
 
 class HotelController extends Controller
 {
-    public function index(MockDataService $mockDataService): JsonResponse
+    public function index(): JsonResponse
     {
-        $hotels = $mockDataService->hotels()->map(function ($hotel): array {
+        $hotels = Hotel::with('roomTypes.roomType')->get()->map(function (Hotel $hotel): array {
             return [
                 'name' => $hotel->name,
                 'code' => $hotel->code,
