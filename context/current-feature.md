@@ -1,8 +1,40 @@
-# Feature actual
+# Conectar el MCP Server con los datos reales
 
 ## Objetivos
 
+### Requisitos
+
+- Conectar el MCP Server existente con la persistencia local real de la aplicación, reutilizando su configuración de acceso y evitando una segunda fuente de datos.
+- Sustituir los datos simulados de `get_hotels`, `get_bookings` y `get_bookings_statistics` por consultas a la persistencia de la aplicación.
+- Mantener la ejecución local mediante `stdio` y la compatibilidad con OpenCode.
+- Mantener el registro de invocaciones y resultados en `mcp/logs/mcp.log` y, cuando el mecanismo existente lo permita, de los mensajes MCP en `mcp/logs/protocol.log`.
+- Gestionar los errores de consulta y comunicarlos al cliente MCP sin terminar inesperadamente el servidor.
+
+### Criterios de aceptación
+
+- El MCP Server continúa ejecutándose localmente mediante `stdio` y puede ser utilizado por OpenCode.
+- `get_hotels` devuelve los hoteles existentes en la persistencia local.
+- `get_bookings` devuelve las reservas existentes en la persistencia local.
+- `get_bookings_statistics` calcula estadísticas a partir de las reservas reales.
+- Ninguna de las herramientas utiliza datos simulados.
+- El MCP Server utiliza la configuración de persistencia existente en el entorno local.
+- Los errores de consulta se gestionan adecuadamente y se comunican al cliente MCP sin terminar el servidor.
+- Las invocaciones y sus resultados continúan registrándose en `mcp/logs/mcp.log`.
+- Los mensajes del protocolo MCP continúan registrándose en `mcp/logs/protocol.log` cuando el mecanismo existente lo permita.
+- OpenCode puede realizar consultas en lenguaje natural cuya respuesta requiera datos reales de la aplicación.
+
+### Fuera de alcance
+
+- Añadir herramientas MCP nuevas.
+- Implementar `resources` MCP, transporte HTTP, autenticación o autorización específica.
+- Integrar servicios o fuentes de datos externas o implementar análisis avanzado o informes.
+
 ## Notas
+
+- Issue: #28
+- El issue no tiene comentarios ni etiquetas adicionales al solicitar el inicio.
+- La primera iteración dejó un servidor MCP local con transporte `stdio`, tres herramientas y logging; esta feature debe conservar ese comportamiento mientras cambia únicamente la fuente de datos.
+- La aplicación Laravel ya dispone de persistencia local y modelos de hoteles y reservas; el MCP debe reutilizar la configuración existente en lugar de duplicarla.
 
 ## Histórico
 

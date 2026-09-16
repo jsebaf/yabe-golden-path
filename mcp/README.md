@@ -1,6 +1,6 @@
 # Servidor MCP local
 
-Este directorio contiene un servidor local del Model Context Protocol para el motor de reservas. Solo utiliza datos simulados y no accede a la aplicación Laravel ni a su persistencia.
+Este directorio contiene un servidor local del Model Context Protocol para el motor de reservas. Consulta en modo lectura la misma base SQLite configurada por la aplicación Laravel en `.env`.
 
 ## Instalación
 
@@ -37,9 +37,11 @@ Usa rutas absolutas para `server.py` si OpenCode se inicia desde otro directorio
 
 ## Herramientas
 
-- `get_hotels`: devuelve hoteles simulados.
-- `get_bookings`: devuelve reservas simuladas.
-- `get_bookings_statistics`: devuelve estadísticas simuladas de reservas.
+- `get_hotels`: devuelve los hoteles almacenados por la aplicación.
+- `get_bookings`: devuelve las reservas almacenadas por la aplicación.
+- `get_bookings_statistics`: calcula estadísticas a partir de las reservas almacenadas.
+
+El servidor busca `DB_DATABASE` en el entorno y en el archivo `.env` de la raíz del proyecto. Si la ruta es relativa, se resuelve desde la raíz de la aplicación. La base debe haber sido migrada y, opcionalmente, poblada con `php artisan db:seed`.
 
 ## Logs
 
