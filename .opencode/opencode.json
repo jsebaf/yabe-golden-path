@@ -3,7 +3,7 @@
   "mcp": {
     "yabe": {
       "type": "local",
-      "command": [".venv-mcp/bin/python", "mcp/server.py"]
+      "command": [".venv/bin/python", "mcp/server.py"]
     }
   }
 }
