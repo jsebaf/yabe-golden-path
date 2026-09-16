@@ -1,4 +1,6 @@
 *.log
+# Keep the MCP log directory while ignoring generated log contents.
+/mcp/logs/*.log
 .DS_Store
 .env
 .env.backup

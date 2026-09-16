@@ -6,6 +6,8 @@
 
 ## Histórico
 
+- 2026-09-16: Se implementó y verificó el servidor MCP local con herramientas simuladas, transporte `stdio`, configuración de OpenCode, logging y documentación; se publicó en la PR #27.
+
 - 2026-09-16: Se implementó y verificó la interfaz React con Tailwind para consultar disponibilidad, se publicó en la PR #23 y esta fue fusionada.
 - 2026-09-15: Se sustituyó el servicio mock por persistencia Eloquent con migraciones, seeders y `EloquentDataService`; se adaptaron los tests con `RefreshDatabase`; se creó la PR #21.
 - 2026-09-12: Se implementó y verificó el endpoint `POST /api/v1/availability`, con Feature Tests, colección Postman y la PR #16.
@@ -15,4 +17,3 @@
 - 2026-09-10: Se implementó y verificó el esqueleto inicial del API definido en el issue #4.
 - 2026-09-10: Se preparó el contexto inicial a partir del issue #4, "Implementar el esqueleto del API".
 - 2026-09-10: Se preparó el contexto inicial a partir del issue #1, "Inicializar el proyecto Laravel".
-
