@@ -6,6 +6,8 @@
 
 ## Histórico
 
+- 2026-09-16: Se conectó el MCP Server con la persistencia SQLite real de Laravel, se añadieron estadísticas y manejo de errores, se verificó con 2 tests y se publicó en la PR #29.
+
 - 2026-09-16: Se implementó y verificó el servidor MCP local con herramientas simuladas, transporte `stdio`, configuración de OpenCode, logging y documentación; se publicó en la PR #27.
 
 - 2026-09-16: Se implementó y verificó la interfaz React con Tailwind para consultar disponibilidad, se publicó en la PR #23 y esta fue fusionada.

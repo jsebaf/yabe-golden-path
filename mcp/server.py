@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import logging
+import os
+import sqlite3
 import sys
 from pathlib import Path
 from typing import Any
@@ -12,6 +14,7 @@ from mcp.server.fastmcp import FastMCP
 
 
 BASE_DIR = Path(__file__).resolve().parent
+APP_DIR = BASE_DIR.parent
 LOG_DIR = BASE_DIR / "logs"
 MCP_LOG = LOG_DIR / "mcp.log"
 PROTOCOL_LOG = LOG_DIR / "protocol.log"
@@ -44,6 +47,51 @@ protocol_logger = logging.getLogger("yabe-mcp.protocol")
 mcp = FastMCP("Yabe Booking Engine")
 
 
+def load_environment() -> dict[str, str]:
+    """Load the Laravel environment values needed by the read-only adapter."""
+    environment = dict(os.environ)
+    env_file = APP_DIR / ".env"
+    if not env_file.exists():
+        return environment
+
+    for line in env_file.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        environment.setdefault(key, value.strip().strip('"').strip("'"))
+    return environment
+
+
+def database_path() -> Path:
+    environment = load_environment()
+    database = environment.get("DB_DATABASE", "database/database.sqlite")
+    if database.startswith("sqlite:"):
+        database = database.removeprefix("sqlite:")
+    path = Path(database)
+    return path if path.is_absolute() else APP_DIR / path
+
+
+def query_rows(query: str) -> list[dict[str, Any]]:
+    connection = sqlite3.connect(database_path())
+    connection.row_factory = sqlite3.Row
+    try:
+        return [dict(row) for row in connection.execute(query).fetchall()]
+    finally:
+        connection.close()
+
+
+def run_tool(name: str, query: str) -> Any:
+    try:
+        result = query_rows(query)
+    except Exception as error:
+        logger.exception("operation=tools/call tool=%s error=%s", name, error)
+        return {"error": f"Unable to query application data: {error}"}
+
+    record_tool_call(name, {}, result)
+    return result
+
+
 def record_tool_call(name: str, arguments: dict[str, Any], result: Any) -> None:
     logger.info(
         "operation=tools/call tool=%s arguments=%s result=%s",
@@ -55,30 +103,36 @@ def record_tool_call(name: str, arguments: dict[str, Any], result: Any) -> None:
 
 @mcp.tool()
 def get_hotels() -> list[dict[str, Any]]:
-    """Return simulated hotels available in the booking engine."""
-    result = [
-        {"id": 1, "name": "Hotel Yabe Madrid", "city": "Madrid"},
-        {"id": 2, "name": "Hotel Yabe Barcelona", "city": "Barcelona"},
-    ]
-    record_tool_call("get_hotels", {}, result)
-    return result
+    """Return hotels stored in the application's local persistence."""
+    return run_tool("get_hotels", "SELECT id, name, code FROM hotels ORDER BY id")
 
 
 @mcp.tool()
 def get_bookings() -> list[dict[str, Any]]:
-    """Return simulated bookings from the booking engine."""
-    result = [
-        {"locator": "YABE001", "hotel": "Hotel Yabe Madrid", "status": "CONFIRMED"},
-        {"locator": "YABE002", "hotel": "Hotel Yabe Barcelona", "status": "PENDING"},
-    ]
-    record_tool_call("get_bookings", {}, result)
-    return result
+    """Return bookings stored in the application's local persistence."""
+    return run_tool(
+        "get_bookings",
+        "SELECT locator, hotel, roomType, paxes, checkin, checkout, status "
+        "FROM bookings ORDER BY id",
+    )
 
 
 @mcp.tool()
 def get_bookings_statistics() -> dict[str, int]:
-    """Return simulated booking statistics."""
-    result = {"total": 2, "confirmed": 1, "pending": 1, "cancelled": 0}
+    """Return statistics calculated from bookings in local persistence."""
+    try:
+        result = query_rows(
+            "SELECT COUNT(*) AS total, "
+            "SUM(CASE WHEN status = 'CONFIRMED' THEN 1 ELSE 0 END) AS confirmed, "
+            "SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END) AS pending, "
+            "SUM(CASE WHEN status = 'CANCELLED' THEN 1 ELSE 0 END) AS cancelled "
+            "FROM bookings"
+        )[0]
+        result = {key: int(value or 0) for key, value in result.items()}
+    except Exception as error:
+        logger.exception("operation=tools/call tool=get_bookings_statistics error=%s", error)
+        return {"error": f"Unable to query application data: {error}"}
+
     record_tool_call("get_bookings_statistics", {}, result)
     return result
 
