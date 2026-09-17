@@ -1,0 +1,66 @@
+name: Deploy to VPS
+
+on:
+  # push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: yabe-app:latest
+      DEPLOY_PATH: /opt/yabe
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build --tag "$IMAGE_NAME" .
+
+      - name: Export Docker image
+        run: docker save "$IMAGE_NAME" | gzip > yabe-app.tar.gz
+
+      - name: Configure SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          install -d -m 700 "$RUNNER_TEMP/ssh"
+          printf '%s\n' "$VPS_SSH_KEY" > "$RUNNER_TEMP/ssh/deploy_key"
+          chmod 600 "$RUNNER_TEMP/ssh/deploy_key"
+          ssh-keyscan -H "$VPS_HOST" >> "$RUNNER_TEMP/ssh/known_hosts"
+
+      - name: Prepare deployment directory
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          ssh \
+            -i "$RUNNER_TEMP/ssh/deploy_key" \
+            -o UserKnownHostsFile="$RUNNER_TEMP/ssh/known_hosts" \
+            "$VPS_USER@$VPS_HOST" \
+            "sudo mkdir -p '$DEPLOY_PATH' && sudo chown '$VPS_USER' '$DEPLOY_PATH'"
+
+      - name: Transfer image and Compose file
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          scp \
+            -i "$RUNNER_TEMP/ssh/deploy_key" \
+            -o UserKnownHostsFile="$RUNNER_TEMP/ssh/known_hosts" \
+            yabe-app.tar.gz compose.production.yaml \
+            "$VPS_USER@$VPS_HOST:$DEPLOY_PATH/"
+
+      - name: Load image and update application
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          ssh \
+            -i "$RUNNER_TEMP/ssh/deploy_key" \
+            -o UserKnownHostsFile="$RUNNER_TEMP/ssh/known_hosts" \
+            "$VPS_USER@$VPS_HOST" \
+            "cd '$DEPLOY_PATH' && gunzip -c yabe-app.tar.gz | sudo docker load && mv compose.production.yaml compose.yaml && sudo docker compose up -d --remove-orphans && rm yabe-app.tar.gz"

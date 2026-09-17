@@ -2,9 +2,13 @@
 
 ## Objetivos
 
+
 ## Notas
 
+
 ## Histórico
+
+- 2026-09-17: Se implementó y verificó el workflow manual de GitHub Actions para construir y desplegar la imagen Docker en un VPS mediante SSH, con Compose de producción y persistencia SQLite.
 
 - 2026-09-17: Se dockerizó la aplicación para ejecución local con Docker Compose, SQLite persistente, inicialización automática y documentación; se verificó con 19 tests y 91 assertions y se publicó en la PR #31.
 
