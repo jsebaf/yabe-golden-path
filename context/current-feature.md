@@ -1,8 +1,30 @@
-# Feature actual
+# Dockerizar aplicación para ejecución local
 
 ## Objetivos
 
+- Crear un `Dockerfile` para construir la imagen de la aplicación.
+- Instalar las dependencias PHP con `composer install`.
+- Instalar las dependencias JavaScript con `npm ci` y construir los assets con `npm run build`.
+- Utilizar SQLite como base de datos e inicializarla mediante las migraciones y el seed de Laravel.
+- Crear un `compose.yaml` que permita levantar la aplicación con un único comando.
+- Exponer la aplicación en el host mediante el puerto `8000` y hacer que Laravel escuche en una interfaz accesible desde fuera del contenedor.
+- Permitir eliminar y recrear el contenedor sin reconstruir manualmente el entorno.
+- Gestionar de forma coherente los datos necesarios para la persistencia SQLite.
+- Documentar cómo construir, arrancar, acceder, detener, eliminar y reconstruir el entorno, incluyendo la decisión sobre la persistencia de SQLite.
+
+### Criterios de aceptación
+
+- Desde una instalación limpia, `docker compose up --build` debe arrancar correctamente la aplicación.
+- YABE debe estar disponible en `http://localhost:8000`.
+- La aplicación debe disponer de la estructura de base de datos y los datos iniciales proporcionados por las migraciones y el seed de Laravel.
+- Debe ser posible detener, eliminar y volver a levantar el entorno siguiendo las instrucciones documentadas.
+
 ## Notas
+
+- Issue: #30
+- El alcance es la ejecución local mediante Docker Compose, sin requerir PHP, Composer, Node.js ni dependencias instaladas en el host.
+- La configuración debe poder servir como base para un futuro despliegue de la misma imagen en un VPS, pero no incluye despliegue, producción, SSH, GitHub Actions, HTTPS, PostgreSQL ni Nginx externo.
+- Deben conservarse los comandos y el flujo de inicialización existentes de Laravel, adaptándolos al contenedor y a SQLite.
 
 ## Histórico
 
