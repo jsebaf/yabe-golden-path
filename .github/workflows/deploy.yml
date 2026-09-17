@@ -43,7 +43,7 @@ jobs:
             -i "$RUNNER_TEMP/ssh/deploy_key" \
             -o UserKnownHostsFile="$RUNNER_TEMP/ssh/known_hosts" \
             "$VPS_USER@$VPS_HOST" \
-            "mkdir -p '$DEPLOY_PATH'"
+            "sudo mkdir -p '$DEPLOY_PATH' && sudo chown '$VPS_USER' '$DEPLOY_PATH'"
 
       - name: Transfer image and Compose file
         env:
@@ -65,4 +65,4 @@ jobs:
             -i "$RUNNER_TEMP/ssh/deploy_key" \
             -o UserKnownHostsFile="$RUNNER_TEMP/ssh/known_hosts" \
             "$VPS_USER@$VPS_HOST" \
-            "cd '$DEPLOY_PATH' && gunzip -c yabe-app.tar.gz | docker load && mv compose.production.yaml compose.yaml && docker compose up -d --remove-orphans && rm yabe-app.tar.gz"
+            "cd '$DEPLOY_PATH' && gunzip -c yabe-app.tar.gz | sudo docker load && mv compose.production.yaml compose.yaml && sudo docker compose up -d --remove-orphans && rm yabe-app.tar.gz"
