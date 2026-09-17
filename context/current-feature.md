@@ -1,8 +1,36 @@
-# Feature actual
+# Automatizar el despliegue mediante GitHub Actions
 
 ## Objetivos
 
+- Crear un workflow en `.github/workflows/` ejecutable manualmente mediante `workflow_dispatch`.
+- Obtener el código del repositorio y construir la imagen Docker utilizando el `Dockerfile` existente.
+- Exportar la imagen con `docker save`, comprimirla si resulta conveniente y transferirla al VPS mediante SSH/SCP.
+- Transferir al VPS el `compose.yaml` necesario para ejecutar la aplicación.
+- Conectarse al VPS mediante SSH, cargar la imagen recibida en Docker y ejecutar o actualizar la aplicación con Docker Compose.
+- Dejar la aplicación accesible en el puerto configurado para el despliegue.
+- Permitir repetir el workflow para actualizar una instalación existente de forma idempotente en la medida de lo posible.
+- Usar GitHub Secrets para `VPS_HOST`, `VPS_USER` y `VPS_SSH_KEY`; no almacenar secretos ni claves privadas en el repositorio.
+- Utilizar la imagen construida por GitHub Actions en el `compose.yaml` de despliegue, conservando los datos de SQLite mediante el volumen definido en Compose y permitiendo añadir servicios en el futuro.
+
+### Criterios de aceptación
+
+- El workflow aparece en `.github/workflows/` y utiliza `workflow_dispatch`.
+- El workflow contiene los pasos necesarios para construir, empaquetar, transferir y desplegar la imagen.
+- El workflow utiliza GitHub Secrets para las credenciales del VPS.
+- El VPS no necesita ejecutar `docker build`.
+- El `compose.yaml` de despliegue utiliza la imagen construida por el workflow y conserva los datos de SQLite mediante su volumen.
+- El workflow puede ejecutarse nuevamente para actualizar la aplicación.
+- Los archivos generados se validan localmente en la medida de lo posible.
+- El workflow no se ejecuta como parte de esta issue y no se realiza ningún despliegue en el VPS.
+- Ningún secreto o clave privada se almacena en el repositorio.
+
 ## Notas
+
+- Issue: #32
+- El proyecto ya dispone de `Dockerfile`, script de entrada, `compose.yaml`, SQLite y un VPS Debian con Docker/Docker Compose y acceso SSH mediante clave.
+- El `compose.yaml` actual está orientado a ejecución local y puede requerir adaptación para consumir una imagen previamente construida en lugar de construirla localmente.
+- La solución debe analizar la configuración Docker existente antes de implementarse y debe limitarse a archivos del repositorio.
+- Quedan fuera de alcance el aprovisionamiento del VPS, Debian, Docker o Docker Compose, DNS, HTTPS, Nginx, alta disponibilidad, rollback automático y monitorización avanzada.
 
 ## Histórico
 
