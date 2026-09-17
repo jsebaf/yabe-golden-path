@@ -1,11 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# YABE
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[Laravel](https://laravel.com)
+
+[![Build Status](https://github.com/laravel/framework/workflows/tests/badge.svg)](https://github.com/laravel/framework/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/framework)
+[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/framework)
+[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/framework)
+
+## Ejecutar con Docker
+
+La aplicación puede ejecutarse localmente con Docker Compose. PHP, Composer, Node.js
+y las dependencias de la aplicación se instalan dentro de la imagen.
+
+Construir y arrancar la aplicación:
+
+```bash
+docker compose up --build
+```
+
+Abre [http://localhost:8000](http://localhost:8000). El contenedor crea la base de
+datos SQLite, genera la clave de aplicación y ejecuta las migraciones y seeders de
+Laravel antes de iniciar el servidor web.
+
+Detener el entorno con `Ctrl+C` o ejecutando:
+
+```bash
+docker compose down
+```
+
+La base de datos SQLite se almacena en el volumen Docker `sqlite-data`. Al recrear
+el contenedor, los datos iniciales se conservan:
+
+```bash
+docker compose up
+```
+
+Para eliminar los contenedores y el volumen local de la base de datos:
+
+```bash
+docker compose down -v
+```
+
+Reconstruir la imagen después de cambiar las dependencias o los assets:
+
+```bash
+docker compose up --build
+```
 
 ## About Laravel
 

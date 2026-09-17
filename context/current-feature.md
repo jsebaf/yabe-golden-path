@@ -6,6 +6,8 @@
 
 ## Histórico
 
+- 2026-09-17: Se dockerizó la aplicación para ejecución local con Docker Compose, SQLite persistente, inicialización automática y documentación; se verificó con 19 tests y 91 assertions y se publicó en la PR #31.
+
 - 2026-09-16: Se conectó el MCP Server con la persistencia SQLite real de Laravel, se añadieron estadísticas y manejo de errores, se verificó con 2 tests y se publicó en la PR #29.
 
 - 2026-09-16: Se implementó y verificó el servidor MCP local con herramientas simuladas, transporte `stdio`, configuración de OpenCode, logging y documentación; se publicó en la PR #27.
